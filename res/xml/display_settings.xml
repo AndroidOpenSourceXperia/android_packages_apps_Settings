@@ -62,4 +62,10 @@
                 android:title="@string/wifi_display_settings_title"
                 android:fragment="com.android.settings.wfd.WifiDisplaySettings" />
 
+        <CheckBoxPreference
+                android:key="illumination"
+                android:title="@string/illumination_title"
+                android:summary="@string/illumination_summary"
+                android:defaultValue="true"/>
+
 </PreferenceScreen>
