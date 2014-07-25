@@ -4904,4 +4904,8 @@
 
     <!-- Text to display in regulatory info screen (from device overlay). -->
     <string name="regulatory_info_text"></string>
+
+    <!-- Text For Illumination Bar Control -->
+    <string name="illumination_title">Illumination Bar</string>
+    <string name="illumination_summary">Enable/Disable illumination bar to experience stock Sony behavior</string>
 </resources>

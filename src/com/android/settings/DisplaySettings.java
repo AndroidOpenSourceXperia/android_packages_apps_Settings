@@ -27,6 +27,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.os.SystemProperties;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -35,6 +36,7 @@ import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.internal.view.RotationPolicy;
 import com.android.settings.DreamSettings;
@@ -53,12 +55,14 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_FONT_SIZE = "font_size";
     private static final String KEY_NOTIFICATION_PULSE = "notification_pulse";
     private static final String KEY_SCREEN_SAVER = "screensaver";
+    private static final String KEY_ILLUMINATION = "illumination";
 
     private static final int DLG_GLOBAL_CHANGE_WARNING = 1;
 
     private CheckBoxPreference mAccelerometer;
     private WarnedListPreference mFontSizePref;
     private CheckBoxPreference mNotificationPulse;
+    private CheckBoxPreference mIllumination;
 
     private final Configuration mCurConfig = new Configuration();
     
@@ -121,6 +125,14 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             } catch (SettingNotFoundException snfe) {
                 Log.e(TAG, Settings.System.NOTIFICATION_LIGHT_PULSE + " not found");
             }
+        }
+
+        if (SystemProperties.getBoolean("ro.semc.illumination", false)) {
+            mIllumination = (CheckBoxPreference) findPreference(KEY_ILLUMINATION);
+            mIllumination.setOnPreferenceChangeListener(this);
+        } else {
+            getPreferenceScreen().removePreference(findPreference(KEY_ILLUMINATION));
+            mIllumination = null;
         }
     }
 
@@ -292,6 +304,14 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             Settings.System.putInt(getContentResolver(), Settings.System.NOTIFICATION_LIGHT_PULSE,
                     value ? 1 : 0);
             return true;
+        } else if (preference == mIllumination && mIllumination != null) {
+            boolean status = mIllumination.isChecked();
+
+            if (status) {
+                Toast.makeText(getActivity(), "Illumination bar enabled", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getActivity(), "Illumination bar disabled", Toast.LENGTH_SHORT).show();
+            }
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
