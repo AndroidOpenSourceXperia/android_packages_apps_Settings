@@ -2045,6 +2045,6 @@
     <string name="regulatory_info_text" msgid="5623087902354026557"></string>
     
     <!-- Texto para el control de la barra de LEDs -->
-    <string name="illumination_title">Barra de LEDs</string>
-    <string name="illumination_summary">Activa o desactiva el comportamiento predeterminado de la barra de LEDs en ROMs de stock</string>
+    <string name="illumination_title">"Barra de LEDs"</string>
+    <string name="illumination_summary">"Activa o desactiva el comportamiento predeterminado de la barra de LEDs en ROMs de stock"</string>
 </resources>
